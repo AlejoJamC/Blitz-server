@@ -48,7 +48,6 @@ function SetupRouter(router) {
     router.route('/admin')
         .get(authRoutes.isAdminAuthenticated, adminRoutes.getAdmins)
         .post(authRoutes.isAdminAuthenticated, adminRoutes.postAdmin);
-    //.post(authRoutes.isAuthenticated, adminRoutes.postAdmin);
 
     // ENDPOINT: /admin/:id
     // ENDPOINT: /admin/count
@@ -62,15 +61,6 @@ function SetupRouter(router) {
     // ENDPOINT: /admin/login
     router.route('/admin/login')
         .get(authRoutes.isAdminLoginAuthenticated, adminRoutes.getAdminLogin);
-
-    // ENDPOINT: /admin/password/reset
-    router.route('/admin/password/reset')
-        .post(authRoutes.isAdminAuthenticated, adminRoutes.postAdminPasswordReset);
-
-    // ENDPOINT: /admin/password/reset/:code
-    router.route('/admin/password/reset/:code')
-        .patch(authRoutes.isAdminAuthenticated, adminRoutes.PatchAdminPasswordReset);
-
     /**
      * ====================================================================
      */
@@ -118,7 +108,6 @@ function SetupRouter(router) {
     router.route('/users')
         .get(authRoutes.isAuthenticated, userRoutes.getUsers)
         .post(userRoutes.postUser);
-    //.post(authRoutes.isAuthenticated, userRoutes.postUser);
 
     // ENDPOINT: /users/:id
     // ENDPOINT: /users/count
@@ -132,15 +121,6 @@ function SetupRouter(router) {
     // ENDPOINT: /login
     router.route('/login')
         .get(authRoutes.isLoginAuthenticated, userRoutes.getLogin);
-
-    // ENDPOINT: /password/reset
-    router.route('/password/reset')
-        .post(authRoutes.isAuthenticated, userRoutes.postPasswordReset);
-
-    // ENDPOINT: /password/reset/:code
-    router.route('/password/reset/:code')
-        .patch(authRoutes.isAuthenticated, userRoutes.PatchPasswordReset);
-
     /**
      * ====================================================================
      */
