@@ -107,7 +107,7 @@ function SetupRouter(router) {
     // ENDPOINT: /users
     router.route('/users')
         .get(authRoutes.isAuthenticated, userRoutes.getUsers)
-        .post(userRoutes.postUser);
+        .post(authRoutes.isAuthenticated, userRoutes.postUser);
 
     // ENDPOINT: /users/:id
     // ENDPOINT: /users/count

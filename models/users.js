@@ -31,7 +31,6 @@ var UserSchema = new Schema({
 		type: String,
 		required: true
 	},
-	telephone: String,
 	status: Boolean
 },{
 	timestamps  : true
