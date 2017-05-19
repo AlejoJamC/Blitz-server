@@ -13,34 +13,32 @@ var logger = require('../utils/logger').logger;
 var User = require('../models/users').User;
 
 // ENDPOINT: /users METHOD: GET
-exports.getUsers = function(req, res){
-  
+exports.getUsers = function (req, res) {
     // Use the 'User' model to find all users
     User.find(function (err, users) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
-            res.send(err);
-            return;
+            return res.json({message: 'Error trying to list users', data: err});
         }
         // success
-        res.json(users);
+        res.status(200).json(users);
     });
 };
 
 // ENDPOINT: /users/:id METHOD: GET
 // ENDPOINT: /users/count METHOD: GET
-exports.getUserById = function(req, res){
+exports.getUserById = function (req, res) {
     // COUNT ENDPOINT CALLED
-    if (req.params.id == 'count'){
+    if (req.params.id == 'count') {
         User.count({}, function (err, countUser) {
             // Check for errors and show message
-            if(err){
+            if (err) {
                 logger.error(err);
-                res.send(err);
+                return res.json({message: 'Error trying to count users', data: err});
             }
             // Success
-            res.json({ message:"The complete count of users", data: countUser });
+            res.status(200).json({message: "The complete count of users", data: countUser});
         });
         return;
     }
@@ -48,13 +46,12 @@ exports.getUserById = function(req, res){
     // Use the 'User' model to find all users
     User.findById(req.params.id, function (err, user) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
-            res.send(err);
-            return;
+            return res.json({message: 'Error trying to get the user information', data: err});
         }
         // success
-        res.json(user);
+        res.status(200).json(user);
     });
 };
 
@@ -63,13 +60,12 @@ exports.getLogin = function (req, res) {
     // Use the 'User' model to find all users
     User.findById(req.user._id, function (err, user) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
-            res.send(err);
-            return;
+            return res.json({message: 'Error trying to login this user', data: err});
         }
         // success
-        res.json({ message:"Login authenticated successfully", data: user });
+        res.status(200).json({message: "Login authenticated successfully", data: user});
     });
 };
 
@@ -79,103 +75,90 @@ exports.postUser = function (req, res) {
     var user = new User();
 
     // Set the User properties that came from the POST data
-    // TODO: enviar el correo de confirmacion de email despues de crearlo
-    // TODO: los codigos y los correos que no sea confirmados en 1 mes deben ser eliminados
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
     user.email = req.body.email;
     user.password = req.body.password;
-    user.emailVefified = false;
-    user.enabled = false;
+    user.emailVefified = process.env.PARAM_AUTOACTIVATE_USER;
+    user.status = process.env.PARAM_AUTOACTIVATE_USER;
 
-    // Embed docs
-    // TODO:// Add the related documents
-
-    user.save(function(err){
+    user.save(function (err) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
-            res.send(err);
-            return;
+            return res.json({message: 'Error trying to create a new user', data: err});
         }
         //Success
-        res.json({ message: 'User created successfully!', data: user });
+        res.status(200).json({message: 'User created successfully!', data: user});
     });
 };
 
 // ENDPOINT: /users/:id METHOD: PUT
-exports.putUser = function(req, res){
+exports.putUser = function (req, res) {
     User.findById(req.params.id, function (err, user) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
-            res.send(err);
-            return;
+            return res.json(err);
         }
 
         // Set the User properties that came from the PUT data
         user.firstName = req.body.firstName;
         user.lastName = req.body.lastName;
-        user.identification = req.body.identification;
         user.email = req.body.email;
         user.password = req.body.password;
-        user.address = req.body.address;
-        user.telephone = req.body.telephone;
-        user.isColombian = req.body.isColombian;
-        user.enabled = req.body.enabled;
-        // Embed docs
-        // TODO:// Add the related documents
-        user.save(function(err){
+        user.status = process.env.status;
+
+        user.save(function (err) {
             // Check for errors and show message
-            if(err){
+            if (err) {
                 logger.error(err);
-                res.send(err);
+                return res.json({message: 'Error trying to update user information', data: err});
             }
             // success
-            res.json({message: 'User updated successfully', data: user });
+            res.status(200).json({message: 'User updated successfully', data: user});
         });
     });
 };
 
 // ENDPOINT: /users/:id METHOD: PATCH
-exports.patchUser = function(req, res){
+exports.patchUser = function (req, res) {
     User.findById(req.params.id, function (err, user) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
-            res.send(err);
-            return;
+            return res.json(err);
         }
 
-        user.enabled = req.body.enabled;
+        user.status = req.body.status;
 
-        user.save(function(err){
+        user.save(function (err) {
             // Check for errors and show message
-            if(err){
+            if (err) {
                 logger.error(err);
-                res.send(err);
-                return;
+                return res.json({message: 'Error trying to change user status', data: err});
             }
             var message = '';
-            if(user.enabled === true){
+            if (user.enabled === true) {
                 message = 'User enabled successfully';
-            }else{
+            } else {
                 message = 'User disbled successfully';
             }
             // success
-            res.json({message: message, data: user });
+            res.status(200).json({message: message, data: user});
         });
     });
 };
 
 // ENDPOINT: /users/:id METHOD: DELETE
-exports.deleteUser = function(req, res){
-    User.findByIdAndRemove(req.params.id, function(err){
+exports.deleteUser = function (req, res) {
+    User.findByIdAndRemove(req.params.id, function (err) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
-            res.send(err);
-            return;
+            return res.json({message: 'Error trying to delete user information', data: err});
         }
         // success
-        res.json({ message: 'User deleted successfully!' });
+        res.status(200).json({message: 'User deleted successfully!'});
     });
 };
