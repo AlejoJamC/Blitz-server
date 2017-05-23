@@ -35,6 +35,8 @@ function SetupRouter(router) {
      */
     var adminRoutes = require('./admins');
     var authRoutes = require('./auth');
+    var connectionRoutes = require('./connections');
+    var murmurnRoutes = require('./murmurs');
     var clientRoutes = require('./clients');
     var oauth2Routes = require('./oauth2');
     var userRoutes = require('./users');
@@ -78,6 +80,48 @@ function SetupRouter(router) {
     // ENDPOINT: /clients/:id
     router.route('/clients/:id')
         .delete(authRoutes.isAuthenticated, clientRoutes.deleteClient);
+    /**
+     * ====================================================================
+     */
+
+
+    /**
+     *  Document:  CONNECTIONS.JS
+     *  Define routes where they are stored endpoints
+     */
+    // ENDPOINT: /connections
+    router.route('/connections')
+        .get(authRoutes.isAdminAuthenticated, connectionRoutes.getConnections)
+        .post(authRoutes.isAdminAuthenticated, connectionRoutes.postConnection);
+
+    // ENDPOINT: /connections/:id
+    // ENDPOINT: /connections/count
+    router.route('/connections/:id')
+        .get(authRoutes.isAdminAuthenticated, connectionRoutes.getConnectionById)
+        .put(authRoutes.isAdminAuthenticated, connectionRoutes.putConnection)
+        .patch(authRoutes.isAdminAuthenticated, connectionRoutes.patchConnection)
+        .delete(authRoutes.isAdminAuthenticated, connectionRoutes.deleteConnection);
+    /**
+     * ====================================================================
+     */
+
+
+    /**
+     *  Document:  MURMURS.JS
+     *  Define routes where they are stored endpoints
+     */
+    // ENDPOINT: /murmurs
+    router.route('/murmurs')
+        .get(authRoutes.isAdminAuthenticated, murmurnRoutes.getMurmurs)
+        .post(authRoutes.isAdminAuthenticated, murmurnRoutes.postMurmur);
+
+    // ENDPOINT: /murmurs/:id
+    // ENDPOINT: /murmurs/count
+    router.route('/murmurs/:id')
+        .get(authRoutes.isAdminAuthenticated, murmurnRoutes.getMurmurById)
+        .put(authRoutes.isAdminAuthenticated, murmurnRoutes.putMurmur)
+        .patch(authRoutes.isAdminAuthenticated, murmurnRoutes.patchMurmur)
+        .delete(authRoutes.isAdminAuthenticated, murmurnRoutes.deleteMurmur);
     /**
      * ====================================================================
      */
