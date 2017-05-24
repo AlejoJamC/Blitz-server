@@ -91,16 +91,16 @@ function SetupRouter(router) {
      */
     // ENDPOINT: /connections
     router.route('/connections')
-        .get(authRoutes.isAdminAuthenticated, connectionRoutes.getConnections)
-        .post(authRoutes.isAdminAuthenticated, connectionRoutes.postConnection);
+        .get(authRoutes.isAuthenticated, connectionRoutes.getConnections)
+        .post(authRoutes.isAuthenticated, connectionRoutes.postConnection);
 
     // ENDPOINT: /connections/:id
     // ENDPOINT: /connections/count
     router.route('/connections/:id')
-        .get(authRoutes.isAdminAuthenticated, connectionRoutes.getConnectionById)
-        .put(authRoutes.isAdminAuthenticated, connectionRoutes.putConnection)
-        .patch(authRoutes.isAdminAuthenticated, connectionRoutes.patchConnection)
-        .delete(authRoutes.isAdminAuthenticated, connectionRoutes.deleteConnection);
+        .get(authRoutes.isAuthenticated, connectionRoutes.getConnectionById)
+        .put(authRoutes.isAuthenticated, connectionRoutes.putConnection)
+        .patch(authRoutes.isAuthenticated, connectionRoutes.patchConnection)
+        .delete(authRoutes.isAuthenticated, connectionRoutes.deleteConnection);
     /**
      * ====================================================================
      */
@@ -112,16 +112,16 @@ function SetupRouter(router) {
      */
     // ENDPOINT: /murmurs
     router.route('/murmurs')
-        .get(authRoutes.isAdminAuthenticated, murmurnRoutes.getMurmurs)
-        .post(authRoutes.isAdminAuthenticated, murmurnRoutes.postMurmur);
+        .get(authRoutes.isAuthenticated, murmurnRoutes.getMurmurs)
+        .post(authRoutes.isAuthenticated, murmurnRoutes.postMurmur);
 
     // ENDPOINT: /murmurs/:id
     // ENDPOINT: /murmurs/count
     router.route('/murmurs/:id')
-        .get(authRoutes.isAdminAuthenticated, murmurnRoutes.getMurmurById)
-        .put(authRoutes.isAdminAuthenticated, murmurnRoutes.putMurmur)
-        .patch(authRoutes.isAdminAuthenticated, murmurnRoutes.patchMurmur)
-        .delete(authRoutes.isAdminAuthenticated, murmurnRoutes.deleteMurmur);
+        .get(authRoutes.isAuthenticated, murmurnRoutes.getMurmurById)
+        .put(authRoutes.isAuthenticated, murmurnRoutes.putMurmur)
+        .patch(authRoutes.isAuthenticated, murmurnRoutes.patchMurmur)
+        .delete(authRoutes.isAuthenticated, murmurnRoutes.deleteMurmur);
     /**
      * ====================================================================
      */
