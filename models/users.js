@@ -19,61 +19,61 @@ var Schema = mongoose.Schema;
  * Define 'User' schema.
  */
 var UserSchema = new Schema({
-	firstName: String,
-	lastName: String,
-	email: {
-		type: String,
-		required: true,
-		unique: true
-	},
-	emailVefified   : Boolean,
-	password: {
-		type: String,
-		required: true
-	},
-	status: Boolean
-},{
-	timestamps  : true
+    firstName: String,
+    lastName: String,
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    emailVefified: Boolean,
+    password: {
+        type: String,
+        required: true
+    },
+    status: Boolean
+}, {
+    timestamps: true
 });
 
 // Execute before each user.save() call
 UserSchema.pre('save', function (callback) {
-	var user = this;
+    var user = this;
 
-	// Break out if the password hasn't changed
-	if(!user.isModified('password')) return callback();
+    // Break out if the password hasn't changed
+    if (!user.isModified('password')) return callback();
 
-	// Password changed so we need to hash it
-	bcrypt.genSalt(5, function (err, salt) {
-		// Check for errors and show message
-		if(err){
-			logger.error(err);
-			return callback(err);
-		}
+    // Password changed so we need to hash it
+    bcrypt.genSalt(5, function (err, salt) {
+        // Check for errors and show message
+        if (err) {
+            logger.error(err);
+            return callback(err);
+        }
 
-		bcrypt.hash(user.password, salt, null, function (err, hash) {
-			// Check for errors and show message
-			if(err){
-				logger.error(err);
-				return callback(err);
-			}
+        bcrypt.hash(user.password, salt, null, function (err, hash) {
+            // Check for errors and show message
+            if (err) {
+                logger.error(err);
+                return callback(err);
+            }
 
-			user.password = hash;
-			callback();
-		});
-	})
+            user.password = hash;
+            callback();
+        });
+    })
 });
 
 UserSchema.methods.verifyPassword = function (password, callback) {
-	bcrypt.compare(password, this.password, function (err, isMatch) {
-		// Check for errors and show message
-		if(err){
-			logger.error(err);
-			return callback(err);
-		}
-		// Make the comparation and send the answer
-		callback(null, isMatch);
-	});
+    bcrypt.compare(password, this.password, function (err, isMatch) {
+        // Check for errors and show message
+        if (err) {
+            logger.error(err);
+            return callback(err);
+        }
+        // Make the comparation and send the answer
+        callback(null, isMatch);
+    });
 };
 
 /**

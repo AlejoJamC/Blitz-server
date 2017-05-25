@@ -105,9 +105,8 @@ exports.putUser = function (req, res) {
         // Set the User properties that came from the PUT data
         user.firstName = req.body.firstName;
         user.lastName = req.body.lastName;
-        user.email = req.body.email;
         user.password = req.body.password;
-        user.status = process.env.status;
+        user.status = req.body.status;
 
         user.save(function (err) {
             // Check for errors and show message

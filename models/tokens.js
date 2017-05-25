@@ -16,19 +16,19 @@ var mongoose = require('mongoose');
  */
 var TokenSchema = new mongoose.Schema({
     value: {
-        type : String,
-        required : true
+        type: String,
+        required: true
     },
     idUser: {
-        type : String,
-        required : true
+        type: String,
+        required: true
     },
-    idClient : {
+    idClient: {
         type: String,
         required: true
     }
-},{
-    timestamps  : true
+}, {
+    timestamps: true
 });
 
 /**

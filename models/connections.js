@@ -16,20 +16,20 @@ var Schema = mongoose.Schema;
  * Define 'Conntection' schema.
  */
 var ConnectionSchema = new Schema({
-    object:{
+    object: {
         id: String,
         name: String,
         description: String
     },
     activate: Boolean,
-    socket:{
+    socket: {
         id: String,
         url: String,
         status: String
     },
     status: Boolean
-},{
-    timestamps  : true
+}, {
+    timestamps: true
 });
 
 /**

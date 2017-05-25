@@ -14,7 +14,7 @@ var mongoose = require('mongoose');
 /**
  * Define 'Code' schema.
  */
-var CodeSchema   = new mongoose.Schema({
+var CodeSchema = new mongoose.Schema({
     value: {
         type: String,
         required: true
@@ -31,8 +31,8 @@ var CodeSchema   = new mongoose.Schema({
         type: String,
         required: true
     }
-},{
-    timestamps  : true
+}, {
+    timestamps: true
 });
 
 /**
