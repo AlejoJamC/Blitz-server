@@ -9,15 +9,15 @@
 /**
  * Module dependencies.
  */
-var logger      = require('../utils/logger').logger;
-var Admin       = require('../models/admins').Admin;
+var logger = require('../utils/logger').logger;
+var Admin = require('../models/admins').Admin;
 
 // ENDPOINT: /admin METHOD: GET
-exports.getAdmins = function(req, res){
+exports.getAdmins = function(req, res) {
     // Use the 'Admin' model to find all admin
-    Admin.find(function (err, admin) {
+    Admin.find(function(err, admin) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
             res.send(err);
             return;
@@ -29,30 +29,30 @@ exports.getAdmins = function(req, res){
 
 // ENDPOINT: /admin/:id METHOD: GET
 // ENDPOINT: /admin/count METHOD: GET
-exports.getAdminById = function(req, res, next){
+exports.getAdminById = function(req, res, next) {
     // LOGIN OR BANKS ENDPOINT CALLED
-    if(req.params.id == 'login'){
+    if (req.params.id == 'login') {
         next();
         return;
     }
     // COUNT ENDPOINT CALLED
-    if (req.params.id == 'count'){
-        Admin.count({}, function (err, countAdmin) {
+    if (req.params.id == 'count') {
+        Admin.count({}, function(err, countAdmin) {
             // Check for errors and show message
-            if(err){
+            if (err) {
                 logger.error(err);
                 res.send(err);
             }
             // Success
-            res.json({ message:"The complete count of admin", data: countAdmin });
+            res.json({ message: "The complete count of admin", data: countAdmin });
         });
         return;
     }
 
     // Use the 'Admin' model to find all admin
-    Admin.findById(req.params.id, function (err, admin) {
+    Admin.findById(req.params.id, function(err, admin) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
             res.send(err);
             return;
@@ -63,34 +63,34 @@ exports.getAdminById = function(req, res, next){
 };
 
 // ENDPOINT: /admin/login METHOD: GET
-exports.getAdminLogin = function (req, res) {
+exports.getAdminLogin = function(req, res) {
     // Use the 'Admin' model to find all admin
-    Admin.findById(req.user._id, function (err, admin) {
+    Admin.findById(req.user._id, function(err, admin) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
             res.send(err);
             return;
         }
         // success
-        res.json({ message:"Login authenticated successfully", data: admin });
+        res.json({ message: "Login authenticated successfully", data: admin });
     });
 };
 
 // ENDPOINT: /admin METHOD: POST
-exports.postAdmin = function (req, res) {
+exports.postAdmin = function(req, res) {
     // Create a new instance of the Admin model
     var admin = new Admin();
 
     // Set the Admin properties that came from the POST data
     admin.email = req.body.email;
     admin.password = req.body.password;
-    admin.emailVefified = false;
-    admin.status = false;
+    admin.emailVefified = process.env.PARAM_AUTOACTIVATE_USER;
+    admin.status = process.env.PARAM_AUTOACTIVATE_USER;
 
-    admin.save(function(err){
+    admin.save(function(err) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
             res.send(err);
             return;
@@ -101,10 +101,10 @@ exports.postAdmin = function (req, res) {
 };
 
 // ENDPOINT: /admin/:id METHOD: PUT
-exports.putAdmin = function(req, res){
-    Admin.findById(req.params.id, function (err, admin) {
+exports.putAdmin = function(req, res) {
+    Admin.findById(req.params.id, function(err, admin) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
             res.send(err);
             return;
@@ -113,32 +113,27 @@ exports.putAdmin = function(req, res){
         // Set the Admin properties that came from the PUT data
         admin.firstName = req.body.firstName;
         admin.lastName = req.body.lastName;
-        admin.identification = req.body.identification;
-        admin.email = req.body.email;
-        admin.password = req.body.password;
-        admin.address = req.body.address;
-        admin.telephone = req.body.telephone;
-        admin.isColombian = req.body.isColombian;
+        admin.password = req.body.password ? req.body.password : admin.password;;
         admin.status = req.body.status;
         // Embed docs
         // TODO:// Add the related documents
-        admin.save(function(err){
+        admin.save(function(err) {
             // Check for errors and show message
-            if(err){
+            if (err) {
                 logger.error(err);
                 res.send(err);
             }
             // success
-            res.json({message: 'Admin updated successfully', data: admin });
+            res.json({ message: 'Admin updated successfully', data: admin });
         });
     });
 };
 
 // ENDPOINT: /admin/:id METHOD: PATCH
-exports.patchAdmin = function(req, res){
-    Admin.findById(req.params.id, function (err, admin) {
+exports.patchAdmin = function(req, res) {
+    Admin.findById(req.params.id, function(err, admin) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
             res.send(err);
             return;
@@ -146,30 +141,30 @@ exports.patchAdmin = function(req, res){
 
         admin.status = req.body.status;
 
-        admin.save(function(err){
+        admin.save(function(err) {
             // Check for errors and show message
-            if(err){
+            if (err) {
                 logger.error(err);
                 res.send(err);
                 return;
             }
             var message = '';
-            if(admin.status === true){
+            if (admin.status === true) {
                 message = 'Admin enabled successfully';
-            }else{
+            } else {
                 message = 'Admin disbled successfully';
             }
             // success
-            res.json({message: message, data: admin });
+            res.json({ message: message, data: admin });
         });
     });
 };
 
 // ENDPOINT: /admin/:id METHOD: DELETE
-exports.deleteAdmin = function(req, res){
-    Admin.findByIdAndRemove(req.params.id, function(err){
+exports.deleteAdmin = function(req, res) {
+    Admin.findByIdAndRemove(req.params.id, function(err) {
         // Check for errors and show message
-        if(err){
+        if (err) {
             logger.error(err);
             res.send(err);
             return;
