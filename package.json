@@ -33,7 +33,7 @@
   "scripts": {
     "test": "npm run eslint && npm run mocha",
     "eslint": "eslint src/. test/. --config .eslintrc.json",
-    "start": "nodemon src/",
+    "start": "nodemon src/ -L",
     "mocha": "mocha test/ --recursive"
   },
   "dependencies": {
