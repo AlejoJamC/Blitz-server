@@ -2,7 +2,6 @@ const authentication = require('feathers-authentication');
 const jwt = require('feathers-authentication-jwt');
 const local = require('feathers-authentication-local');
 const oauth2 = require('feathers-authentication-oauth2');
-const Auth0Strategy = require('passport-auth0');
 const GoogleStrategy = require('passport-google-oauth20');
 const FacebookStrategy = require('passport-facebook');
 const GithubStrategy = require('passport-github');
@@ -15,11 +14,6 @@ module.exports = function () {
   app.configure(authentication(config));
   app.configure(jwt());
   app.configure(local(config.local));
-
-  app.configure(oauth2(Object.assign({
-    name: 'auth0',
-    Strategy: Auth0Strategy
-  }, config.auth0)));
 
   app.configure(oauth2(Object.assign({
     name: 'google',
