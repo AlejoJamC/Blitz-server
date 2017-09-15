@@ -7,7 +7,7 @@
     "max": 50
   },
   "authentication": {
-    "secret": "9c3a9e4439d6b325a4f3e7ea14d3fcf9230f0aafae0638d9630bade7a7c011e180a0243c7b034d30eb6b571ccc021975210d88640464de334d89d234f8ebf305a38a87f4963f04eb9e1ee180996f070323d5a5b1d0974e9c139b1a17b624d3c8082880e6d175a6ad6772f536357a2deac565cbf14e46d97effe323c13da993a63e0fbb97ef6e2dc26f2cc9a18e2b376b08af3eee7c7ef90f9e2bf2ed42e8fdd584e2d8312617a857de708d95c75c87dabbe91a165a20aa9bd3d3c5a140702a59aefdc60867316c9d341f0951141f9dbbb3db7451b734351a149aa382bbdbb7118c5294f485d085d04d72b52d6af6c74b751263a7bfad5941c04337735025c833",
+    "secret": "98bd12adb6a2464673788f575a63991a2604e06e60e76c748967372842e92a05761f32c090f5c81f6d3789e70cd1912648f779fc16b5e6b16d7d68c9c6d2626edd0cb80dc82d472c0225908fa471137f03d984d0944d5b2b6620a9d7ec7083352cccd98066c233dceacb26521073064d05ab260ab53b71bc86b98e1e2c4d0dc3908e6c6290e32b69fb9ac22e1979ff6d3536f693ec93866d310aa731a4931a454d0fa31f1a52c6d1cde40eb9f210d6fcb9c6e70a56e1a897f8f2cb2ba6786677cea9be20bc462648c56ce5f02ca868cdfffd4d110df22651f2970ef0cd7cba21b42741341972abc4f5c8ff5a0ae86cbe428f08773cc0ca87e3c33854a76bfba3",
     "strategies": [
       "jwt",
       "local"
@@ -28,12 +28,6 @@
       "entity": "user",
       "usernameField": "email",
       "passwordField": "password"
-    },
-    "auth0": {
-      "clientID": "your auth0 client id",
-      "clientSecret": "your auth0 client secret",
-      "successRedirect": "/",
-      "domain": "mydomain.auth0.com"
     },
     "google": {
       "clientID": "your google client id",
