@@ -22,7 +22,7 @@ var mongoose = require('mongoose');
  */
 
 function SetupMongoDB (HostUri, DBName){
-    mongoose.connect(HostUri + DBName);
+    mongoose.connect(HostUri + DBName, { useMongoClient: true });
     logger.info('Connecting to MongoDB server, database: ' + DBName);
 
     var con = mongoose.connection;
