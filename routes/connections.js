@@ -31,12 +31,12 @@ exports.getConnections = function (req, res) {
 // ENDPOINT: /connections/count METHOD: GET
 exports.getConnectionById = function (req, res, next) {
     // LOGIN OR BANKS ENDPOINT CALLED
-    if (req.params.id == 'login') {
+    if (req.params.id === 'login') {
         next();
         return;
     }
     // COUNT ENDPOINT CALLED
-    if (req.params.id == 'count') {
+    if (req.params.id === 'count') {
         Connection.count({}, function (err, countAdmin) {
             // Check for errors and show message
             if (err) {

@@ -29,14 +29,9 @@ exports.getMurmurs = function (req, res) {
 
 // ENDPOINT: /murmurs/:id METHOD: GET
 // ENDPOINT: /murmurs/count METHOD: GET
-exports.getMurmurById = function (req, res, next) {
-    // LOGIN OR BANKS ENDPOINT CALLED
-    if (req.params.id == 'login') {
-        next();
-        return;
-    }
+exports.getMurmurById = function (req, res) {
     // COUNT ENDPOINT CALLED
-    if (req.params.id == 'count') {
+    if (req.params.id === 'count') {
         Murmur.count({}, function (err, countMurmur) {
             // Check for errors and show message
             if (err) {

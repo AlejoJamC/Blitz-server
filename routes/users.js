@@ -30,7 +30,7 @@ exports.getUsers = function(req, res) {
 // ENDPOINT: /users/count METHOD: GET
 exports.getUserById = function(req, res) {
     // COUNT ENDPOINT CALLED
-    if (req.params.id == 'count') {
+    if (req.params.id === 'count') {
         User.count({}, function(err, countUser) {
             // Check for errors and show message
             if (err) {

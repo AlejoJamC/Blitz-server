@@ -17,8 +17,8 @@ var mongoose = require('mongoose');
  *
  * @description Configures and initiates the connection with the NoSQL MongoDB database.
  *
- * @param {string}      DBName      Name of the database to connect.
- * @param {string}      HostUri     Connection Uri to MongoDB server.
+ * @param {String}      DBName      Name of the database to connect.
+ * @param {String}      HostUri     Connection Uri to MongoDB server.
  */
 
 function SetupMongoDB (HostUri, DBName){
