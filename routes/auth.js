@@ -203,8 +203,8 @@ passport.use('client-basic', new BasicStrategy(
 ));
 
 passport.use(new BearerStrategy(
-    function (accessToken, callback) {
-        Token.findOne({value: accessToken}, function (err, token) {
+    function(accessToken, callback) {
+        Token.findOne({ value: accessToken }, function (err, token) {
             if (err) {
                 logger.error(err);
                 return callback(err);
@@ -215,39 +215,20 @@ passport.use(new BearerStrategy(
                 return callback(null, false);
             }
 
-            User.findOne({_id: token.idUser}, function (err, user) {
-                if (err) {
+            User.findOne({ _id: token.idUser }, function (err, user) {
+                if (err){
                     logger.error(err);
                     return callback(err);
                 }
 
-                // No user found with that email
+                // No user found
                 if (!user) {
-                    Admin.findOne({email: email}, function (err, admin) {
-                        if (err) {
-                            logger.error(err);
-                            return callback(err);
-                        }
-
-                        // No admin found with that email
-                        if (!admin) {
-                            return callback(null, false);
-                        }
-
-                        // Simple example with no scope
-                        // TODO: verificar el alcance de la respuesta de la BearerStrategy
-                        callback(null, user, {scope: '*'});
-                    });
-                } else {
-                    // No user found
-                    if (!user) {
-                        return callback(null, false);
-                    }
-
-                    // Simple example with no scope
-                    // TODO: verificar el alcance de la respuesta de la BearerStrategy
-                    callback(null, user, {scope: '*'});
+                    return callback(null, false);
                 }
+
+                // Simple example with no scope
+                // TODO: verificar el alcance de la respuesta de la BearerStrategy
+                callback(null, user, { scope: '*' });
             });
         });
     }
