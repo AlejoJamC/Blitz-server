@@ -63,6 +63,10 @@ function SetupRouter(router) {
     // ENDPOINT: /admin/login
     router.route('/admin/login')
         .get(authRoutes.isAdminLoginAuthenticated, adminRoutes.getAdminLogin);
+
+    // ENDPOINT: /admin/entities/count
+    router.route('/admin/entities/count')
+        .get(authRoutes.isAdminAuthenticated, adminRoutes.getAllEntitiesCouns);
     /**
      * ====================================================================
      */
