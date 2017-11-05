@@ -78,7 +78,13 @@ exports.getAdminLogin = function (req, res) {
             return;
         }
         // success
-        res.json({message: "Login authenticated successfully", data: admin});
+        // success
+        if(admin.status === false){
+            res.status(401).json({message: "Login authenticated successfully", data: admin});
+        }else{
+            res.status(200).json({message: "Login authenticated successfully", data: admin});
+        }
+
     });
 };
 
@@ -90,8 +96,8 @@ exports.postAdmin = function (req, res) {
     // Set the Admin properties that came from the POST data
     admin.email = req.body.email;
     admin.password = req.body.password;
-    admin.emailVefified = (req.body.status === 'undefined') ? process.env.PARAM_AUTOACTIVATE_USER : req.body.status;
-    admin.status = (req.body.status === 'undefined') ? process.env.PARAM_AUTOACTIVATE_USER : req.body.status;
+    admin.emailVefified = (typeof req.body.status === 'undefined') ? process.env.PARAM_AUTOACTIVATE_USER : req.body.status;
+    admin.status = (typeof req.body.status === 'undefined') ? process.env.PARAM_AUTOACTIVATE_USER : req.body.status;
 
     admin.save(function (err) {
         // Check for errors and show message
