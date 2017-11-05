@@ -22,10 +22,15 @@ var MurmurSchema = new mongoose.Schema({
     type: String,
     value: String,
     audio: String,
+    audiodat: String,
+    image: String,
+    figure: String,
+    fft: String,
+    published: Boolean,
     status: Boolean
 });
 
 /**
- * Expose 'Admin' model.
+ * Expose 'Murmur' model.
  */
 module.exports.Murmur = mongoose.model('Murmur', MurmurSchema);
