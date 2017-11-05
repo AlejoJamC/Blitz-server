@@ -282,7 +282,6 @@ exports.postPasswordReset = function (req, res) {
             return res.status(404).json({message: 'Email provided doesn`t Exists'});
         }
 
-
         // Get User data values
         var userId = user[0]._id;
 
@@ -404,14 +403,14 @@ exports.patchPasswordReset = function (req, res) {
                 // Check for errors and show message
                 if (err) {
                     logger.error(err);
-                    return res.send(err);
+                    return res.status(422).send(err);
                 }
                 // Now deleted the code from the collection
                 Reset.remove({email: email}, function (err) {
                     // Check for errors and show message
                     if (err) {
                         logger.error(err);
-                        return res.send(err);
+                        return res.status(422).send(err);
                     }
                     // success
                     res.json({message: 'User password changed and code: ' + codeRequest + ' deleted successfully!'});
