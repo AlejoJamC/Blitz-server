@@ -169,6 +169,22 @@ function SetupRouter(router) {
     // ENDPOINT: /login
     router.route('/login')
         .get(authRoutes.isLoginAuthenticated, userRoutes.getLogin);
+
+    // ENDPOINT: /activations/codes/:code
+    router.route('/activations/codes/:code')
+        .patch(authRoutes.isAuthenticated, userRoutes.patchActivationCode);
+
+    // ENDPOINT: /password/reset
+    router.route('/password/reset')
+        .post(authRoutes.isAuthenticated, userRoutes.postPasswordReset);
+
+    // ENDPOINT: /password/confirmation/:code/:email
+    router.route('/password/confirmation/:code/:email')
+        .get(authRoutes.isAuthenticated, userRoutes.getConfirmationReset);
+
+    // ENDPOINT: /password/reset/:code
+    router.route('/password/reset/:code')
+        .patch(authRoutes.isAuthenticated, userRoutes.patchPasswordReset);
     /**
      * ====================================================================
      */
